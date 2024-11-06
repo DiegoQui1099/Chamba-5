@@ -3,7 +3,6 @@ import os
 import hashlib
 from flask import Flask, flash, render_template, make_response, request, redirect, session, url_for, abort, send_file, jsonify
 from flask_mysqldb import MySQL
-import MySQLdb
 from config import Config
 import io
 import math
@@ -13,12 +12,22 @@ from functools import wraps
 
 app = Flask(__name__)
 app.config.from_object(Config)
-app.secret_key = 'tu_clave_secreta_aqui'
+app.secret_key = '1234512345'
 mysql = MySQL(app)
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/consulta')
+def consulta():
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM multas_jurados")
+    jurados = cursor.fetchall()
+    cursor.close()
+
+    return render_template('consulta.html', jurados=jurados)
 
 @app.route('/footer')
 def footer():

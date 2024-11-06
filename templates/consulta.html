@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type='image/x-icon' rel='shortcut icon' href="{{ url_for('static', filename='img/favicon.ico') }}" />
+    <link type='text/css' rel='stylesheet' href="{{ url_for('static', filename='css/consulta.css') }}" />
+    <title>Consulta</title>
+</head>
+<body>
+    {% include 'header.html' %}
+    <h1>Hola Incumplido morozo care ñame</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Cédula</th>
+                <th>Departamento</th>
+                <th>Multa P</th>
+                <th>Motivo</th>
+                <th>Observaciones</th>
+                <th>Id Jurado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for jurado in jurados %}
+            <tr>
+                <td>{{ jurado.Nombres }}</td>
+                <td>{{ jurado.Apellidos }}</td>
+                <td>{{ jurado.Cedula }}</td>
+                <td>{{ jurado.Departamento }}</td>
+                <td>{{ jurado.Multa_p }}</td>
+                <td>{{ jurado.Motivo }}</td>
+                <td>{{ jurado.observaciones }}</td>  
+                <td>{{ jurado.Id_Jurado }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% include 'footer.html' %}
+</body>
+</html>
