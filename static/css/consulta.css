@@ -1,44 +1,63 @@
-/* Estilos para el contenedor de la tabla */
+/* Contenedor con fondo degradado y centrado */
+.table-container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 20px auto; /* Centra el contenedor */
+    padding: 20px;
+    background: linear-gradient(to right, #f8f9fa, #e0e0e0);
+    border-radius: 10px;
+    box-shadow: 0 8px 14px rgba(0, 0, 0, 0.15);
+    overflow-x: auto;
+}
+
+/* Estilos de la tabla */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
     font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 /* Encabezado de la tabla */
 table thead th {
-    background-color: #191e9abe;
+    color: #444;
+    padding: 15px;
+    background-color: #002D55;
     color: white;
-    padding: 10px;
-    border: 1px solid #ddd;
     text-align: left;
+    font-weight: bold;
 }
 
-/* Filas de la tabla */
+/* Filas y celdas de la tabla */
 table tbody tr {
-    border: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.2s ease-in-out;
 }
 
-/* Celdas de la tabla */
 table td {
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ddd;
     text-align: left;
+    color: #555;
 }
 
 /* Colores alternos para las filas */
 table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f4f4f4;
 }
 
-/* Hover en filas */
+/* Efecto hover en filas */
 table tbody tr:hover {
-    background-color: #ddd;
+    background-color: #e9ecef;
 }
 
 /* Ajustes responsivos */
 @media (max-width: 600px) {
+    .table-container {
+        width: 95%;
+    }
     table, thead, tbody, th, td, tr {
         display: block;
     }
@@ -48,18 +67,43 @@ table tbody tr:hover {
     table tbody tr {
         margin-bottom: 10px;
         background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 8px;
     }
     table tbody td {
-        padding: 8px;
+        padding: 10px;
         text-align: right;
         position: relative;
+        border: none;
     }
     table tbody td::before {
         content: attr(data-label);
         position: absolute;
-        left: 0;
+        left: 10px;
         padding-left: 10px;
         font-weight: bold;
         text-align: left;
     }
+}
+
+
+/* Boton Volver */
+
+.volver-busqueda-btn {
+    background-color: #002D55; /* Color de fondo */
+    color: white; /* Color del texto */
+    padding: 10px 20px; /* Espaciado interno */
+    text-decoration: none; /* Quitar subrayado */
+    border: none; /* Sin bordes */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño del texto */
+    cursor: pointer; /* Cambiar cursor al pasar el mouse */
+    display: inline-block; /* Para comportarse como un botón */
+    transition: background-color 0.3s ease; /* Efecto de transición */
+    align-items: center;
+}
+
+.volver-busqueda-btn:hover {
+    background-color: #004080; /* Color al pasar el mouse */
 }

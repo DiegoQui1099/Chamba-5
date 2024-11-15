@@ -20,14 +20,24 @@
         <h4>Registraduria Nacional Del Estado Civil</h4>
         <h5>Traste casi siempre</h5>
 
-        <form method="POST">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="/buscar">
             <div class="juradoss">
                 <label for="cedula">Cédula de ciudadanía:</label>
-                <input type="text" id="cedula" name="cedula" placeholder="Digite el número" required>
+                <input type="text" id="cedula" name="cedula" placeholder="Digite el número" >
             </div>
             <div class="juradoss">
-                <label for="cedula">Fecha de Expedición:</label>
-                <input type="date" id="fecha" name="fecha" required>
+                <label for="fechaexp">Fecha de Expedición:</label>
+                <input type="date" id="fechaexp" name="fechaexp" >
             </div>
             <div class="recaptcha-container">
                 <div class="g-recaptcha" data-sitekey="TU_CLAVE_SITIO"></div>
@@ -35,7 +45,33 @@
             <button type="submit" class="botonJ">Consultar</button>
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const cedulaInput = document.getElementById('cedula');
+            const fechaInput = document.getElementById('fechaexp');
     
+            form.addEventListener('submit', function(event) {
+                if (cedulaInput.value.trim() === '') {
+                    event.preventDefault(); // Evita que el formulario se envíe
+                    alert('El campo "Cédula de ciudadanía" es obligatorio.');
+                    cedulaInput.focus();
+                }
+            
+            form.addEventListener('submit', function(event) {
+                if (fechaInput.value.trim() === '') {
+                    event.preventDefault(); // Evita que el formulario se envíe
+                    alert('El campo "Fecha De Expedicion" es obligatorio.');
+                    fechaInput.focus();
+                }
+                
+                });
+            });
+        });
+    </script>
+
     {% include 'footer.html' %}
 </body>
+
 </html>
