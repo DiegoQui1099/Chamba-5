@@ -22,20 +22,24 @@ def index():
 # Ruta que recibe la cédula y redirige a /consulta
 @app.route('/buscar', methods=['POST'])
 def buscar():
-    cedula = request.form['cedula']
+    cedula = request.form.get('cedula')
+    fechaexp = request.form.get('fechaexp')
 
-    # Verifica si la cédula existe en la base de datos
+    # Verifica si la cédula y la fecha de expedición coinciden en la base de datos
     cursor = mysql.connection.cursor()
-    cursor.execute("SELECT * FROM multas_jurados WHERE Cedula = %s", (cedula,))
+    cursor.execute(
+        "SELECT * FROM multas_jurados WHERE Cedula = %s AND FechaExp = %s", 
+        (cedula, fechaexp)
+    )
     jurado = cursor.fetchone()
     cursor.close()
 
-    # Si la cédula existe, guarda en la sesión y redirige a /consulta
+    # Si coinciden, guarda en la sesión y redirige a /consulta
     if jurado:
         session['cedula'] = cedula  # Guardamos la cédula en la sesión
         return redirect(url_for('consulta'))
     else:
-        flash("Cédula no encontrada. Intente nuevamente.")
+        flash("Cédula o Fecha de Expedición incorrecta. Intente nuevamente.")
         return redirect(url_for('index'))
 
 # Ruta para mostrar los detalles del jurado en consulta.html
@@ -48,12 +52,15 @@ def consulta():
         return redirect(url_for('index'))
 
     cursor = mysql.connection.cursor()
-    cursor.execute("SELECT Nombres, Apellidos, Cedula, FechaExp, Departamento, Multa_p, Motivo, observaciones, Id_Jurado FROM multas_jurados WHERE Cedula = %s", (cedula,))
+    cursor.execute(
+        "SELECT Nombres, Apellidos, Cedula, FechaExp, Departamento, Multa_p, Motivo, observaciones, Id_Jurado FROM multas_jurados WHERE Cedula = %s", 
+        (cedula,)
+    )
     jurados = cursor.fetchall()
     cursor.close()
 
-    # Si `jurado` tiene datos, estos se pasarán como tupla a `consulta.html`
     return render_template('consulta.html', jurados=jurados)
+
 
 @app.route('/footer')
 def footer():
