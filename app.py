@@ -5,6 +5,8 @@ from flask import Flask, flash, render_template, make_response, request, redirec
 from flask_mysqldb import MySQL
 from config import Config
 import io
+import requests
+import logging
 import math
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -14,6 +16,8 @@ app = Flask(__name__)
 app.config.from_object(Config)
 app.secret_key = '1234512345'
 mysql = MySQL(app)
+logging.basicConfig(level=logging.INFO)
+SECRET_KEY = '6Le464wqAAAAAGuFH7VlDzNyn_F_1i77QXOtMu87'
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -24,8 +28,25 @@ def index():
 def buscar():
     cedula = request.form.get('cedula')
     fechaexp = request.form.get('fechaexp')
+    recaptcha_response = request.form.get('g-recaptcha-response')
 
-    # Verifica si la cédula y la fecha de expedición coinciden en la base de datos
+    # Validar el token con el servidor de Google
+    data = {
+        'secret': '6Le464wqAAAAAGuFH7VlDzNyn_F_1i77QXOtMu87',  # Tu clave secreta
+        'response': recaptcha_response
+    }
+    r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+    result = r.json()
+
+    # Log de la respuesta de reCAPTCHA
+    logging.info("Respuesta de reCAPTCHA: %s", result)
+
+    # Verificar si la validación de reCAPTCHA fue exitosa
+    if result.get('success'):
+        flash("Falló la verificación de reCAPTCHA. Inténtalo de nuevo.")
+        return redirect(url_for('index'))
+
+    # Lógica de validación en la base de datos
     cursor = mysql.connection.cursor()
     cursor.execute(
         "SELECT * FROM multas_jurados WHERE Cedula = %s AND FechaExp = %s", 
@@ -34,7 +55,6 @@ def buscar():
     jurado = cursor.fetchone()
     cursor.close()
 
-    # Si coinciden, guarda en la sesión y redirige a /consulta
     if jurado:
         session['cedula'] = cedula  # Guardamos la cédula en la sesión
         return redirect(url_for('consulta'))

@@ -39,11 +39,15 @@
                 <label for="fechaexp">Fecha de Expedición:</label>
                 <input type="date" id="fechaexp" name="fechaexp">
             </div>
+            br
+            <center>
             <div class="recaptcha-container">
-                <div class="g-recaptcha" data-sitekey="TU_CLAVE_SITIO"></div>
+                <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
             </div>
+            </center>
             <button type="submit" class="botonJ">Consultar</button>
         </form>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>   
     </div>
 
     <script>
@@ -51,6 +55,7 @@
             const form = document.querySelector('form');
             const cedulaInput = document.getElementById('cedula');
             const fechaInput = document.getElementById('fechaexp');
+            const capchat = document.getElementById('recaptcha');   
 
             form.addEventListener('submit', function (event) {
                 if (cedulaInput.value.trim() === '') {
@@ -65,7 +70,7 @@
                         alert('El campo "Fecha De Expedicion" es obligatorio.');
                         fechaInput.focus();
                     }
-
+                    
                 });
             });
         });
