@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type='image/x-icon' rel='shortcut icon' href="{{ url_for('static', filename='img/favicon.ico') }}" />
-    <link type='text/css' rel='stylesheet' href="{{ url_for('static', filename='css/consulta.css') }}" />
+    <link type="image/x-icon" rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/consulta.css') }}" />
     <title>Consulta</title>
 </head>
 
@@ -13,34 +13,32 @@
     {% include 'header.html' %}
     <br>
     <center>
-        <h1>Hola care nenufar</h1>
+        <h1>Resultados de la Consulta</h1>
     </center>
     <!-- Contenedor de la tabla con fondo degradado -->
     <div class="table-container">
         <table>
             <thead>
                 <tr>
-                    <th>Nombres</th>
-                    <th>Apellidos</th>
                     <th>Cédula</th>
-                    <th>Fecha Expedición</th>
-                    <th>Departamento</th>
-                    <th>Precio De Multa</th>
-                    <th>Motivo</th>
-                    <th>Observaciones</th>
+                    <th>Primer Nombre</th>
+                    <th>Segundo Nombre</th>
+                    <th>Primer Apellido</th>
+                    <th>Segundo Apellido</th>
+                    <th>Valor Sanción</th>
+                    <th>Código Departamento</th>
                 </tr>
             </thead>
             <tbody>
                 {% for jurado in jurados %}
                 <tr>
-                    <td>{{ jurado[0] }}</td>
-                    <td>{{ jurado[1] }}</td>
-                    <td>{{ jurado[2] }}</td>
-                    <td>{{ jurado[3] }}</td>
-                    <td>{{ jurado[4] }}</td>
-                    <td>{{ jurado[5] }}</td>
-                    <td>{{ jurado[6] }}</td>
-                    <td>{{ jurado[7] }}</td>
+                    <td>{{ jurado[0] }}</td> <!-- documento -->
+                    <td>{{ jurado[1] }}</td> <!-- n1 -->
+                    <td>{{ jurado[2] }}</td> <!-- n2 -->
+                    <td>{{ jurado[3] }}</td> <!-- a1 -->
+                    <td>{{ jurado[4] }}</td> <!-- a2 -->
+                    <td>{{ jurado[5] }}</td> <!-- valor_sancion -->
+                    <td>{{ jurado[6] }}</td> <!-- coddep -->
                 </tr>
                 {% endfor %}
             </tbody>
