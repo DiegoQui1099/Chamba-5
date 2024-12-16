@@ -16,9 +16,9 @@
     {% include 'header.html' %}
 
     <div class="content-wrapper_1">
-        <h3>Consulta De Multas Jurados</h3>
-        <h4>Registraduria Nacional Del Estado Civil</h4>
-        <h5>Traste casi siempre</h5>
+        <h3>Registraduria Nacional Del Estado Civil</h3>
+        <h4>Consulta Cobros A Jurados</h4>
+        <h5>Consulta Sobre Sanciones</h5>
 
         {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -33,11 +33,11 @@
         <form method="POST" action="/buscar">
             <div class="juradoss">
                 <label for="documento">Cédula de ciudadanía:</label>
-                <input type="text" id="documento" name="documento" placeholder="Digite el número" required>
+                <input type="text" id="documento" name="documento" placeholder="Digite el número">
             </div>
             <div class="juradoss">
-                <label for="fechaexp">Fecha de Expedición:</label>
-                <input type="date" id="fechaexp" name="fechaexp">
+                <label for="fecha_expedicion">Fecha de Expedición:</label>
+                <input type="date" id="fecha_expedicion" name="fecha_expedicion">
             </div>
             <br>
             <center>
@@ -53,22 +53,22 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.querySelector('form');
-            const cedulaInput = document.getElementById('cedula');
-            const fechaInput = document.getElementById('fechaexp');
+            const documento = document.getElementById('documento');
+            const fecha_expedicion = document.getElementById('fecha_expedicion');
             const capchat = document.getElementById('recaptcha');   
 
             form.addEventListener('submit', function (event) {
-                if (cedulaInput.value.trim() === '') {
+                if (documento.value.trim() === '') {
                     event.preventDefault(); // Evita que el formulario se envíe
                     alert('El campo "Cédula de ciudadanía" es obligatorio.');
-                    cedulaInput.focus();
+                    documento.focus();
                 }
 
                 form.addEventListener('submit', function (event) {
-                    if (fechaInput.value.trim() === '') {
+                    if (fecha_expedicion.value.trim() === '') {
                         event.preventDefault(); // Evita que el formulario se envíe
                         alert('El campo "Fecha De Expedicion" es obligatorio.');
-                        fechaInput.focus();
+                        fecha_expedicion.focus();
                     }
                     
                 });

@@ -13,7 +13,8 @@
     {% include 'header.html' %}
     <br>
     <center>
-        <h1>Resultados de la Consulta</h1>
+        <h2>Registraduria Nacional Del Estado Civil</h2>
+        <h5>Bienvendio al portal de consultas de sanciones a jurados</h5>
     </center>
     <!-- Contenedor de la tabla con fondo degradado -->
     <div class="table-container">
@@ -30,16 +31,16 @@
                 </tr>
             </thead>
             <tbody>
-                {% for jurado in jurados %}
-                <tr>
-                    <td>{{ jurado[0] }}</td> <!-- documento -->
-                    <td>{{ jurado[1] }}</td> <!-- n1 -->
-                    <td>{{ jurado[2] }}</td> <!-- n2 -->
-                    <td>{{ jurado[3] }}</td> <!-- a1 -->
-                    <td>{{ jurado[4] }}</td> <!-- a2 -->
-                    <td>{{ jurado[5] }}</td> <!-- valor_sancion -->
-                    <td>{{ jurado[6] }}</td> <!-- coddep -->
-                </tr>
+                {% for detalle in detalles %}
+                    <tr>
+                        <td>{{ detalle[0] }}</td> 
+                        <td>{{ detalle[1] }}</td> <!-- Primer Nombre -->
+                        <td>{{ detalle[2] }}</td> <!-- Segundo Nombre -->
+                        <td>{{ detalle[3] }}</td> <!-- Primer Apellido -->
+                        <td>{{ detalle[4] }}</td> <!-- Segundo Apellido -->
+                        <td>{{ detalle[5] }}</td> <!-- Valor de la sanción -->
+                        <td>{{ detalle[6] }}</td> <!-- Código del Departamento -->
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
