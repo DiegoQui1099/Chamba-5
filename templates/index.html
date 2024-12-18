@@ -17,18 +17,20 @@
 
     <div class="content-wrapper_1">
         <h3>Registraduria Nacional Del Estado Civil</h3>
-        <h4>Consulta Cobros A Jurados</h4>
-        <h5>Consulta Sobre Sanciones</h5>
+        <h4>Consulta Sanciones A Jurados</h4>
 
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
+        <div class="flash-container">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="flash-message">
+                            {{ message }}
+                            <button class="flash-close" onclick="this.parentElement.style.display='none';">&times;</button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
 
         <form method="POST" action="/buscar">
             <div class="juradoss">

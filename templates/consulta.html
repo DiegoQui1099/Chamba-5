@@ -28,21 +28,24 @@
                     <th>Segundo Apellido</th>
                     <th>Valor Sanción</th>
                     <th>Código Departamento</th>
+                    <th>Departamento o Dependencia</th>
                 </tr>
             </thead>
             <tbody>
                 {% for detalle in detalles %}
                     <tr>
-                        <td>{{ detalle[0] }}</td> 
+                        <td>{{ detalle[0] }}</td> <!-- Cédula -->
                         <td>{{ detalle[1] }}</td> <!-- Primer Nombre -->
                         <td>{{ detalle[2] }}</td> <!-- Segundo Nombre -->
                         <td>{{ detalle[3] }}</td> <!-- Primer Apellido -->
                         <td>{{ detalle[4] }}</td> <!-- Segundo Apellido -->
                         <td>{{ detalle[5] }}</td> <!-- Valor de la sanción -->
                         <td>{{ detalle[6] }}</td> <!-- Código del Departamento -->
+                        <td>{{ detalle[7] }}</td> <!-- Nombre del Departamento -->
                     </tr>
                 {% endfor %}
             </tbody>
+            
         </table>
     </div>
     <center><a href="{{ url_for('index') }}" class="volver-busqueda-btn">Volver a la búsqueda</a></center>

@@ -68,3 +68,30 @@ body {
             background-color: #0056b3;
         }
 
+
+/* Alertas */
+
+.flash-container {
+    margin: 20px;
+}
+
+.flash-message {
+    background-color: #eaf7ff;
+    color: #0056b3;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #b8e2fc;
+    border-radius: 5px;
+    position: relative;
+}
+
+.flash-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #007bff;
+    cursor: pointer;
+}

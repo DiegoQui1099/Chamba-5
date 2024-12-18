@@ -29,6 +29,19 @@ def buscar():
     documento = request.form.get('documento')
     fecha_expedicion_ingresada = request.form.get('fecha_expedicion')  # Asumimos que el formulario tiene un campo para la fecha
 
+    #Validar el token con el servidor de Google (COMENTADO)
+    recaptcha_response = request.form.get('g-recaptcha-response')
+    data = {
+         'secret': '6Le464wqAAAAAGuFH7VlDzNyn_F_1i77QXOtMu87',  # Tu clave secreta
+         'response': recaptcha_response
+    }
+    r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+    result = r.json()
+    logging.info("Respuesta de reCAPTCHA: %s", result)
+    if result.get('success'):
+         flash("Falló la verificación de reCAPTCHA. Inténtalo de nuevo.")
+         return redirect(url_for('index'))
+
     # Validación de entrada
     if not documento or not fecha_expedicion_ingresada:
         flash("Por favor ingrese un número de documento válido y la fecha de expedición.")
@@ -60,7 +73,7 @@ def buscar():
             # Si se encuentra, validar la fecha de expedición
             fecha_expedicion_ani = resultado_ani[1]  # Suponiendo que ANIFchExpedicion es el segundo campo en el resultado
             if fecha_expedicion_ingresada != str(fecha_expedicion_ani):
-                flash("La fecha de expedición ingresada no coincide con la registrada en la base de datos.")
+                flash("La fecha de expedición ingresada no coincide con la cedula ingresada.")
                 return redirect(url_for('index'))
             session['documento'] = documento
             return redirect(url_for('consulta'))
@@ -79,7 +92,7 @@ def buscar():
 @app.route('/consulta')
 def consulta():
     documento = session.get('documento')
-
+    
     if not documento:
         flash("No hay un documento en la sesión. Realice la búsqueda nuevamente.")
         return redirect(url_for('index'))
@@ -90,9 +103,10 @@ def consulta():
         with connection_cobros.cursor() as cursor_cobros:
             cursor_cobros.execute(
                 """
-                SELECT documento, n1, n2, a1, a2, valor_sancion, coddep 
-                FROM informacion 
-                WHERE documento = %s
+                SELECT i.documento, i.n1, i.n2, i.a1, i.a2, i.valor_sancion, i.coddep, d.nomdep
+                FROM informacion i
+                LEFT JOIN deptos d ON i.coddep = d.coddep
+                WHERE i.documento = %s
                 """,
                 (documento,)
             )
@@ -112,6 +126,7 @@ def consulta():
         return redirect(url_for('index'))
 
 
+
 @app.route('/footer')
 def footer():
     return render_template('footer.html')
@@ -124,16 +139,3 @@ def header():
 
 if __name__ == '__main__':
     app.run(debug=DEBUG, port=PORT)
-
-    # Validar el token con el servidor de Google (COMENTADO)
-    # recaptcha_response = request.form.get('g-recaptcha-response')
-    # data = {
-    #     'secret': '6Le464wqAAAAAGuFH7VlDzNyn_F_1i77QXOtMu87',  # Tu clave secreta
-    #     'response': recaptcha_response
-    # }
-    # r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
-    # result = r.json()
-    # logging.info("Respuesta de reCAPTCHA: %s", result)
-    # if not result.get('success'):
-    #     flash("Falló la verificación de reCAPTCHA. Inténtalo de nuevo.")
-    #     return redirect(url_for('index'))
